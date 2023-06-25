@@ -34,7 +34,18 @@ export default function Index() {
 
     const { data: totalData } = useSWR('/api/public/dashboard', fetcher)
 
-    
+    const generteKey = () => {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        let counter = 0;
+        while (counter < 15) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          counter += 1;
+        }
+        // return result;
+        document.getElementById('key').value = 'LuXXIOS-' + result;
+    }
 
     const handlePagination = index => {
         if (index.includes('Next')) {
@@ -376,6 +387,7 @@ export default function Index() {
         </Modal>
         <Modal id={'add_modal'} title={'Tambah Data'}>
             <form onSubmit={handleSubmit}>
+                <span onClick={() => generteKey()} className="btn btn-sm btn-info w-full">Generate Random Key</span>
                 <Text placeholder={'Masukkan Key'} id={'key'} isRequired label={'Key'} errors={errors}></Text>
                 <Text placeholder={'Durasi (Hari)'} id={'duration'} isNumber isRequired label={'Durasi'} errors={errors}></Text>
                 <SubmitButtonModal id={'add_modal'} />
